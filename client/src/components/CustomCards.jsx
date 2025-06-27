@@ -1,7 +1,10 @@
 import './Cards.css';
 import cardsData from '../data/cardsData';
+import { useNavigate } from 'react-router-dom';
 
 export default function CustomCards() {
+  const navigate = useNavigate();
+
   return (
     <div className="container px-4 py-5" id="custom-cards">
       <h2 className="pb-2 border-bottom text-white">Productos recomendados</h2>
@@ -20,7 +23,7 @@ export default function CustomCards() {
               }}
             >
               <div className="d-flex flex-column h-100 p-3 text-white text-shadow-1">
-                {/* Texto pequeño flotando arriba */}
+                {/* Ubicación flotante arriba */}
                 <div
                   style={{
                     position: 'absolute',
@@ -35,9 +38,12 @@ export default function CustomCards() {
                   {card.location}
                 </div>
 
-                {/* Botones de acción al final */}
+                {/* Botones de acción */}
                 <div className="mt-auto d-flex gap-2">
-                  <button className="btn btn-sm btn-light fw-bold">Ver</button>
+                  <button onClick={() => {
+                      console.log("Navegando a:", `/producto/${card.id}`);
+                      navigate(`/producto/${card.id}`);
+                  }}>Ver</button>
                   <button className="btn btn-sm btn-outline-danger fw-bold">❤️</button>
                   <button className="btn btn-sm btn-outline-success fw-bold">🛒</button>
                   <button className="btn btn-sm btn-warning fw-bold">{card.price}</button>

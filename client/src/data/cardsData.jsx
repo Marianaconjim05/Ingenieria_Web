@@ -29,7 +29,7 @@ const cardsData = [
     price: '$399',
     image: 'images/productos/HH-TRACKLIST-T-FRONT.webp',
     description: 'Camisa oficial de edición limitada con tela suave y cómoda.',
-    sizes: ['S', 'M', 'L', 'XL']
+    sizes: ['S', 'M', 'L', 'XL',]
   },
   {
     id: 4,
@@ -47,7 +47,7 @@ const cardsData = [
     location: 'CDMX',
     duration: 'Envío 3 días',
     price: '$399',
-    image: 'images/productos/HSTSILVERHOODIE.webp',
+    image: 'images/productos/housesraglan-lavender.webp',
     description: 'Camisa oficial de edición limitada con tela suave y cómoda.',
     sizes: ['S', 'M', 'L', 'XL']
   },

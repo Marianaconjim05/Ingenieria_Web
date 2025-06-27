@@ -36,7 +36,7 @@ const ProductView = () => {
         <div className="col-md-6">
           <h2>{product.title}</h2>
           <p className="text-muted">{product.description}</p>
-          <h4 className="text-warning fw-bold">${product.price}</h4>
+          <h4 className="text-warning fw-bold">{product.price}</h4>
 
           {product.sizes?.length > 0 && (
             <div className="mb-3">
@@ -85,3 +85,4 @@ const ProductView = () => {
 };
 
 export default ProductView;
+
