@@ -6,4 +6,6 @@
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
+  min-height: 300px; /* 👈 Esto es lo que faltaba */
+  border: 1px solid #444; /* (opcional) para que veas el contorno */
 }
