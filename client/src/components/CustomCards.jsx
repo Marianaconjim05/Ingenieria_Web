@@ -1,9 +1,15 @@
+// src/components/CustomCards.jsx
 import './Cards.css';
 import cardsData from '../data/cardsData';
 import { useNavigate } from 'react-router-dom';
+import { useCartContext } from '../context/CartContext';
+import { useFavContext } from "../context/FavContext";
+import { FaHeart, FaCartPlus } from 'react-icons/fa';
 
 export default function CustomCards() {
   const navigate = useNavigate();
+  const { addToFav } = useFavContext(); // DESCOMENTADO Y CORRECTO
+  const { addToCart } = useCartContext();
 
   return (
     <div className="container px-4 py-5" id="custom-cards">
@@ -21,9 +27,10 @@ export default function CustomCards() {
                 minHeight: '300px',
                 position: 'relative',
               }}
+              onClick={() => navigate(`/producto/${card.id}`)}
             >
               <div className="d-flex flex-column h-100 p-3 text-white text-shadow-1">
-                {/* Ubicación flotante arriba */}
+
                 <div
                   style={{
                     position: 'absolute',
@@ -38,15 +45,40 @@ export default function CustomCards() {
                   {card.location}
                 </div>
 
-                {/* Botones de acción */}
                 <div className="mt-auto d-flex gap-2">
-                  <button onClick={() => {
-                      console.log("Navegando a:", `/producto/${card.id}`);
+                  <button
+                    className="btn btn-sm btn-outline-light fw-bold"
+                    onClick={(e) => {
+                      e.stopPropagation();
                       navigate(`/producto/${card.id}`);
-                  }}>Ver</button>
-                  <button className="btn btn-sm btn-outline-danger fw-bold">❤️</button>
-                  <button className="btn btn-sm btn-outline-success fw-bold">🛒</button>
-                  <button className="btn btn-sm btn-warning fw-bold">{card.price}</button>
+                    }}
+                  >
+                    Ver
+                  </button>
+
+                  <button
+                    className="btn btn-sm btn-outline-danger fw-bold"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      addToFav(card);
+                    }}
+                  >
+                    <FaHeart />
+                  </button>
+
+                  <button
+                    className="btn btn-sm btn-outline-success fw-bold"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      addToCart(card);
+                    }}
+                  >
+                    <FaCartPlus />
+                  </button>
+
+                  <span className="btn btn-sm btn-warning fw-bold" disabled>
+                    ${card.price}
+                  </span>
                 </div>
               </div>
             </div>

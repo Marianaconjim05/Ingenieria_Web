@@ -8,6 +8,8 @@ import Login from './pages/Login.jsx';
 import Registro from './pages/Registro.jsx';
 import Client from './pages/Client';
 import ProductView from './pages/ProductView';
+import CartView from './pages/CartView';
+import FavView from './pages/FavView';
 import './App.css'
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
           <Route path="/registro" element={<Registro />} />
           <Route path="/cliente" element={<Client />} />
           <Route path="/producto/:id" element={<ProductView />} />
+          <Route path="/carrito" element={<CartView />} />
+          <Route path="/favoritos" element={<FavView />} />
       </Route>
     </Routes>
     </>
@@ -28,6 +32,9 @@ function App() {
 }
 
 export default App;
+
+
+
 
 
 
