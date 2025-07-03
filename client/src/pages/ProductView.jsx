@@ -71,12 +71,8 @@ const ProductView = () => {
           )}
 
           <div className="d-flex gap-3 mt-4">
-            <button className="btn btn-success" onClick={handleAddToCart}>
-              <FaCartPlus className="me-2" /> Agregar al carrito
-            </button>
-            <button className="btn btn-outline-danger" onClick={handleAddToFavorites}>
-              <FaHeart className="me-2" /> Favoritos
-            </button>
+            <button onClick={() => addToCarrito(producto)}>Agregar al carrito</button>
+            <button onClick={() => addToFavoritos(producto)}>Agregar a favoritos</button>
           </div>
         </div>
       </div>

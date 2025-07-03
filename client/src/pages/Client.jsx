@@ -1,4 +1,5 @@
 import CustomCards from '../components/CustomCards';
+import cardsData from '../data/cardsData';
 
 export default function Cliente() {
   return (
