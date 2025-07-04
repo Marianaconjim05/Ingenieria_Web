@@ -1,28 +1,38 @@
 // src/components/Navbar.jsx
-import { Home, ShoppingBag, Phone, Heart, ShoppingCart } from 'lucide-react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from 'react-router-dom';
+import { useFavContext } from '../context/FavContext';
+import { useCartContext } from '../context/CartContext';
 
 const Navbar = () => {
+  const { favoritos } = useFavContext();
+  const { carrito } = useCartContext();
+
   return (
-    <nav className="navbar navbar-light bg-white shadow-sm px-4">
-      <div className="container-fluid justify-content-end">
-        <a href="/" className="nav-link px-3 text-dark" title="Inicio">
-          <Home size={24} />
-        </a>
-        <a href="/cliente" className="nav-link px-3 text-dark" title="Compras">
-          <ShoppingBag size={24} />
-        </a>
-        <a href="/favoritos" className="nav-link px-3 text-dark" title="Favoritos">
-          <Heart size={24} />
-        </a>
-        <a href="/carrito" className="nav-link px-3 text-dark" title="Carrito">
-          <ShoppingCart size={24} />
-        </a>
-        <a href="/contacto" className="nav-link px-3 text-dark" title="Contacto">
-          <Phone size={24} />
-        </a>
+    <header className="p-3 text-bg-dark">
+      <div className="container">
+        <div className="d-flex justify-content-end align-items-center gap-3">
+          <Link to="/" className="btn btn-outline-light">🏠</Link>
+          <Link to="/cliente" className="btn btn-outline-light">📦</Link>
+          <Link to="/favoritos" className="btn btn-outline-light position-relative">
+            🤍
+            {favoritos.length > 0 && (
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {favoritos.length}
+              </span>
+            )}
+          </Link>
+          <Link to="/carrito" className="btn btn-outline-light position-relative">
+            🛒
+            {carrito.length > 0 && (
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+                {carrito.length}
+              </span>
+            )}
+          </Link>
+          <Link to="/contacto" className="btn btn-outline-light">📞</Link>
+        </div>
       </div>
-    </nav>
+    </header>
   );
 };
 

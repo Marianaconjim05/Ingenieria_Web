@@ -1,14 +1,14 @@
-
+// src/context/FavContext.jsx
 import { createContext, useContext, useState, useEffect } from 'react';
 
-// Crear el contexto
+
 const FavContext = createContext();
 
-// Proveedor del contexto
+
 export const FavProvider = ({ children }) => {
   const [favoritos, setFavoritos] = useState([]);
 
-  // Cargar favoritos desde localStorage al iniciar
+
   useEffect(() => {
     const data = localStorage.getItem("favoritos");
     if (data) {
@@ -16,17 +16,20 @@ export const FavProvider = ({ children }) => {
     }
   }, []);
 
-  // Guardar en localStorage cuando cambia
+
   useEffect(() => {
     localStorage.setItem("favoritos", JSON.stringify(favoritos));
   }, [favoritos]);
 
-  // Agregar producto a favoritos
+  // ✅ Prevención de duplicados
   const addToFav = (producto) => {
-    setFavoritos((prev) => [...prev, producto]);
+    const exists = favoritos.some((item) => item.id === producto.id);
+    if (!exists) {
+      setFavoritos((prev) => [...prev, producto]);
+    }
   };
 
-  // Eliminar producto de favoritos por id
+
   const removeFromFav = (id) => {
     setFavoritos((prev) => prev.filter((item) => item.id !== id));
   };
@@ -38,5 +41,5 @@ export const FavProvider = ({ children }) => {
   );
 };
 
-// 🚨 ESTA ES LA EXPORTACIÓN QUE NECESITA TU CustomCards.jsx
+
 export const useFavContext = () => useContext(FavContext);

@@ -6,10 +6,8 @@ import { FaHeartBroken } from 'react-icons/fa';
 export default function FavView() {
   const { favoritos, removeFromFav } = useFavContext();
 
-  console.log("Productos en favoritos:", favoritos);
-
   return (
-    <div className="container-fluid py-5 text-black">
+    <div className="container py-5 text-black">
       <h2 className="border-bottom pb-2">Favoritos</h2>
       {favoritos.length === 0 ? (
         <p>No tienes productos favoritos.</p>
@@ -22,7 +20,10 @@ export default function FavView() {
                 <div className="card-body">
                   <h5 className="card-title">{producto.name}</h5>
                   <p className="card-text">${producto.precio}</p>
-                  <button className="btn btn-warning" onClick={() => removeFromFav(producto.id)}>
+                  <button
+                    className="btn btn-warning"
+                    onClick={() => removeFromFav(producto.id)}
+                  >
                     <FaHeartBroken /> Quitar
                   </button>
                 </div>
