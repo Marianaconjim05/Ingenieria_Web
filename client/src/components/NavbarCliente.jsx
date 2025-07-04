@@ -14,8 +14,9 @@ const NavbarCliente = () => {
             <img src="/images/logo.svg" alt="Logo" width="40" height="32" className="me-2" />
             <span className="fs-4 fw-bold">UpiitaStore</span>
           </Link>
+
           <div className="text-end d-flex gap-3">
-            <Link to="/favoritos" className="btn btn-outline-danger position-relative">
+            <Link to="/cliente/favoritos" className="btn btn-outline-danger position-relative">
               ❤️
               {favoritos.length > 0 && (
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -24,7 +25,7 @@ const NavbarCliente = () => {
               )}
             </Link>
 
-            <Link to="/carrito" className="btn btn-outline-success position-relative">
+            <Link to="/cliente/carrito" className="btn btn-outline-success position-relative">
               🛒
               {carrito.length > 0 && (
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">

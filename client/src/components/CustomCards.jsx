@@ -1,63 +1,53 @@
-// src/components/CustomCards.jsx
 import './Cards.css';
 import cardsData from '../data/cardsData';
 import { useNavigate } from 'react-router-dom';
-import { useCartContext } from '../context/CartContext';
 import { useFavContext } from "../context/FavContext";
+import { useCartContext } from '../context/CartContext';
 import { FaHeart, FaCartPlus } from 'react-icons/fa';
 
 export default function CustomCards() {
   const navigate = useNavigate();
-  const { addToFav } = useFavContext(); // DESCOMENTADO Y CORRECTO
+  const { addToFav } = useFavContext();
   const { addToCart } = useCartContext();
 
   return (
-    <div className="container px-4 py-5" id="custom-cards">
-      <h2 className="pb-2 border-bottom text-white">Productos recomendados</h2>
+    <div className="container-fluid px-5 py-5" id="custom-cards">
+      <h2 className="pb-2 border-bottom text-white text-center">Productos recomendados</h2>
 
-      <div className="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+      <div className="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
         {cardsData.map((card, index) => (
           <div className="col" key={index}>
             <div
-              className="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+              className="card bg-dark text-white shadow-lg d-flex flex-row align-items-center p-3"
               style={{
-                backgroundImage: `url(${card.image})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                minHeight: '300px',
-                position: 'relative',
+                height: '180px',
+                borderRadius: '20px',
+                cursor: 'pointer',
+                overflow: 'hidden'
               }}
               onClick={() => navigate(`/producto/${card.id}`)}
             >
-              <div className="d-flex flex-column h-100 p-3 text-white text-shadow-1">
+              {/* Imagen */}
+              <div className="me-3" style={{ flex: '0 0 160px', height: '100%' }}>
+                <img
+                  src={card.image}
+                  alt={card.title}
+                  className="img-fluid h-100 rounded"
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
 
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '10px',
-                    left: '15px',
-                    backgroundColor: 'rgba(0,0,0,0.5)',
-                    padding: '4px 8px',
-                    borderRadius: '8px',
-                    fontSize: '0.8rem',
-                  }}
-                >
-                  {card.location}
+              {/* Info y botones */}
+              <div className="d-flex flex-column justify-content-between h-100 flex-grow-1">
+                <div>
+                  <h5 className="fw-bold mb-1">{card.title}</h5>
+                  <p className="text-muted small mb-2">{card.location}</p>
+                  <span className="badge bg-warning text-dark fs-6">${card.price}</span>
                 </div>
 
-                <div className="mt-auto d-flex gap-2">
+                <div className="mt-2 d-flex gap-2">
                   <button
-                    className="btn btn-sm btn-outline-light fw-bold"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/producto/${card.id}`);
-                    }}
-                  >
-                    Ver
-                  </button>
-
-                  <button
-                    className="btn btn-sm btn-outline-danger fw-bold"
+                    className="btn btn-outline-danger btn-sm"
                     onClick={(e) => {
                       e.stopPropagation();
                       addToFav(card);
@@ -65,9 +55,8 @@ export default function CustomCards() {
                   >
                     <FaHeart />
                   </button>
-
                   <button
-                    className="btn btn-sm btn-outline-success fw-bold"
+                    className="btn btn-outline-success btn-sm"
                     onClick={(e) => {
                       e.stopPropagation();
                       addToCart(card);
@@ -75,10 +64,15 @@ export default function CustomCards() {
                   >
                     <FaCartPlus />
                   </button>
-
-                  <span className="btn btn-sm btn-warning fw-bold" disabled>
-                    ${card.price}
-                  </span>
+                  <button
+                    className="btn btn-outline-light btn-sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/producto/${card.id}`);
+                    }}
+                  >
+                    Ver
+                  </button>
                 </div>
               </div>
             </div>

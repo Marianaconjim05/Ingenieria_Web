@@ -10,6 +10,7 @@ import Client from './pages/Client';
 import ProductView from './pages/ProductView';
 import CartView from './pages/CartView';
 import FavView from './pages/FavView';
+import CheckoutView from './pages/CheckoutView';
 import './App.css'
 
 function App() {
@@ -22,9 +23,12 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/registro" element={<Registro />} />
           <Route path="/cliente" element={<Client />} />
+          <Route path="/cliente/favoritos" element={<FavView />} />
+          <Route path="/cliente/carrito" element={<CartView />} />
           <Route path="/producto/:id" element={<ProductView />} />
           <Route path="/carrito" element={<CartView />} />
           <Route path="/favoritos" element={<FavView />} />
+          <Route path="/checkout" element={<CheckoutView />} />
       </Route>
     </Routes>
     </>
@@ -34,6 +38,10 @@ function App() {
 export default App;
 
 
+
+
+// Dentro de <Routes>
+<Route path="/checkout" element={<CheckoutView />} />
 
 
 
