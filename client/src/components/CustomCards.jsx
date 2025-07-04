@@ -1,71 +1,51 @@
+// src/components/CustomCards.jsx
 import './Cards.css';
 import cardsData from '../data/cardsData';
 import { useNavigate } from 'react-router-dom';
-import { useFavContext } from "../context/FavContext";
-import { useCartContext } from '../context/CartContext';
-import { FaHeart, FaCartPlus } from 'react-icons/fa';
 
 export default function CustomCards() {
   const navigate = useNavigate();
-  const { addToFav } = useFavContext();
-  const { addToCart } = useCartContext();
 
   return (
-    <div className="container-fluid px-5 py-5" id="custom-cards">
+    <div className="container px-4 py-5" id="custom-cards">
       <h2 className="pb-2 border-bottom text-white text-center">Productos recomendados</h2>
 
-      <div className="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+      <div className="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
         {cardsData.map((card, index) => (
           <div className="col" key={index}>
             <div
-              className="card bg-dark text-white shadow-lg d-flex flex-row align-items-center p-3"
+              className="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
               style={{
-                height: '180px',
-                borderRadius: '20px',
-                cursor: 'pointer',
-                overflow: 'hidden'
+                backgroundImage: `url(${card.image})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                minHeight: '300px',
+                position: 'relative',
               }}
               onClick={() => navigate(`/producto/${card.id}`)}
             >
-              {/* Imagen */}
-              <div className="me-3" style={{ flex: '0 0 160px', height: '100%' }}>
-                <img
-                  src={card.image}
-                  alt={card.title}
-                  className="img-fluid h-100 rounded"
-                  style={{ objectFit: 'cover' }}
-                />
-              </div>
-
-              {/* Info y botones */}
-              <div className="d-flex flex-column justify-content-between h-100 flex-grow-1">
-                <div>
-                  <h5 className="fw-bold mb-1">{card.title}</h5>
-                  <p className="text-muted small mb-2">{card.location}</p>
-                  <span className="badge bg-warning text-dark fs-6">${card.price}</span>
+              <div className="d-flex flex-column h-100 p-3 text-white text-shadow-1">
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '10px',
+                    left: '15px',
+                    backgroundColor: 'rgba(0,0,0,0.5)',
+                    padding: '4px 8px',
+                    borderRadius: '8px',
+                    fontSize: '0.8rem',
+                  }}
+                >
+                  {card.location}
                 </div>
 
-                <div className="mt-2 d-flex gap-2">
+                <div className="mt-auto d-flex justify-content-between align-items-center">
+                  <span className="btn btn-sm btn-warning fw-bold" disabled>
+                    ${card.price}
+                  </span>
+
                   <button
-                    className="btn btn-outline-danger btn-sm"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      addToFav(card);
-                    }}
-                  >
-                    <FaHeart />
-                  </button>
-                  <button
-                    className="btn btn-outline-success btn-sm"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      addToCart(card);
-                    }}
-                  >
-                    <FaCartPlus />
-                  </button>
-                  <button
-                    className="btn btn-outline-light btn-sm"
+                    className="btn btn-sm btn-outline-light fw-bold"
                     onClick={(e) => {
                       e.stopPropagation();
                       navigate(`/producto/${card.id}`);
