@@ -1,4 +1,3 @@
-// src/pages/CartView.jsx
 import React from 'react';
 import { useCartContext } from '../context/CartContext';
 import { FaTrash } from 'react-icons/fa';
@@ -8,6 +7,11 @@ import './CartView.css';
 export default function CartView() {
   const { carrito, removeFromCart, clearCart } = useCartContext();
   const navigate = useNavigate();
+
+  const total = carrito.reduce((acc, producto) => {
+    const precio = parseFloat(producto.precio || producto.price || 0);
+    return acc + precio;
+  }, 0);
 
   const handleVaciarCarrito = () => {
     if (confirm('¿Estás seguro de vaciar el carrito?')) {
@@ -35,7 +39,7 @@ export default function CartView() {
                   <div className="cart-body">
                     <div>
                       <h5 className="cart-title">{producto.name}</h5>
-                      <p className="cart-price">${producto.price || producto.precio}</p>
+                      <p className="cart-price">${producto.precio || producto.price}</p>
                     </div>
                     <button
                       className="btn btn-danger mt-3"
@@ -47,6 +51,10 @@ export default function CartView() {
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="text-end fs-4 fw-bold mb-4">
+            Total a pagar: ${total.toFixed(2)}
           </div>
 
           <div className="cart-actions">

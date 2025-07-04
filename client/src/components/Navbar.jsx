@@ -29,7 +29,6 @@ const Navbar = () => {
               </span>
             )}
           </Link>
-          <Link to="/contacto" className="btn btn-outline-light">📞</Link>
         </div>
       </div>
     </header>
