@@ -11,6 +11,7 @@ import ProductView from './pages/ProductView';
 import CartView from './pages/CartView';
 import FavView from './pages/FavView';
 import CheckoutView from './pages/CheckoutView';
+import ReviewView from './pages/ReviewView';
 import './App.css'
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/carrito" element={<CartView />} />
           <Route path="/favoritos" element={<FavView />} />
           <Route path="/checkout" element={<CheckoutView />} />
+          <Route path="review" element={<ReviewView />} />
       </Route>
     </Routes>
     </>

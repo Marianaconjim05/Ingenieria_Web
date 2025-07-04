@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useCartContext } from '../context/CartContext';
+import { useNavigate } from 'react-router-dom';
 import './CheckoutView.css';
 
 export default function CheckoutView() {
   const { carrito, setCarrito } = useCartContext();
+  const navigate = useNavigate();
 
   // Dirección
   const [direccion, setDireccion] = useState({
@@ -33,8 +35,15 @@ export default function CheckoutView() {
       return;
     }
 
-    alert('¡Compra realizada con éxito!');
+    const productosComprados = [...carrito];
     setCarrito([]);
+
+    alert('¡Compra realizada con éxito!');
+
+    // Redirige a ReviewView con los productos comprados
+    setTimeout(() => {
+      navigate('/review', { state: { productos: productosComprados } });
+    }, 100);
   };
 
   return (
