@@ -1,23 +1,35 @@
-// src/pages/FavView.jsx
 import React from 'react';
 import { useFavContext } from '../context/FavContext';
 import { useCartContext } from '../context/CartContext';
 import { FaCartPlus, FaHeartBroken } from 'react-icons/fa';
-import './CartView.css'; // Reutilizamos el mismo estilo visual
+import './CartView.css';
 
 export default function FavView() {
-  const { favoritos, removeFromFav, setFavoritos } = useFavContext();
-  const { addToCart } = useCartContext();
+  const { favoritos, removeFromFav, clearFav } = useFavContext();
+  const { carrito, setCarrito } = useCartContext();
 
   const handleVaciarFavoritos = () => {
-    if (confirm('¿Seguro que quieres vaciar tus favoritos?')) {
-      setFavoritos([]);
+    if (window.confirm('¿Seguro que quieres vaciar tus favoritos?')) {
+      clearFav();
+      localStorage.setItem('favoritos', JSON.stringify([]));
     }
   };
 
   const handleAgregarTodoAlCarrito = () => {
-    favoritos.forEach((producto) => addToCart(producto));
-    setFavoritos([]);
+    if (favoritos.length === 0) {
+      alert('No tienes productos en favoritos.');
+      return;
+    }
+
+    const nuevosProductos = favoritos.filter(
+      (fav) => !carrito.some((prod) => prod.id === fav.id)
+    );
+
+    const actualizado = [...carrito, ...nuevosProductos];
+    setCarrito(actualizado);
+    localStorage.setItem('carrito', JSON.stringify(actualizado));
+
+    alert(`${nuevosProductos.length} producto(s) agregado(s) al carrito 🛒`);
   };
 
   return (
@@ -40,7 +52,11 @@ export default function FavView() {
                     </div>
                     <button
                       className="btn btn-outline-danger mt-3"
-                      onClick={() => removeFromFav(producto.id)}
+                      onClick={() => {
+                        removeFromFav(producto.id);
+                        const actualizados = favoritos.filter((p) => p.id !== producto.id);
+                        localStorage.setItem('favoritos', JSON.stringify(actualizados));
+                      }}
                     >
                       <FaHeartBroken className="me-1" /> Quitar
                     </button>

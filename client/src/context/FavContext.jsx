@@ -1,41 +1,38 @@
 // src/context/FavContext.jsx
 import { createContext, useContext, useState, useEffect } from 'react';
 
-
 const FavContext = createContext();
-
 
 export const FavProvider = ({ children }) => {
   const [favoritos, setFavoritos] = useState([]);
 
-
   useEffect(() => {
-    const data = localStorage.getItem("favoritos");
-    if (data) {
-      setFavoritos(JSON.parse(data));
+    const favStorage = localStorage.getItem('favoritos');
+    if (favStorage) {
+      setFavoritos(JSON.parse(favStorage));
     }
   }, []);
 
-
   useEffect(() => {
-    localStorage.setItem("favoritos", JSON.stringify(favoritos));
+    localStorage.setItem('favoritos', JSON.stringify(favoritos));
   }, [favoritos]);
 
-  // ✅ Prevención de duplicados
   const addToFav = (producto) => {
-    const exists = favoritos.some((item) => item.id === producto.id);
-    if (!exists) {
-      setFavoritos((prev) => [...prev, producto]);
+    if (!favoritos.some((p) => p.id === producto.id)) {
+      setFavoritos([...favoritos, producto]);
     }
   };
 
-
   const removeFromFav = (id) => {
-    setFavoritos((prev) => prev.filter((item) => item.id !== id));
+    setFavoritos(favoritos.filter((p) => p.id !== id));
+  };
+
+  const clearFav = () => {
+    setFavoritos([]);
   };
 
   return (
-    <FavContext.Provider value={{ favoritos, addToFav, removeFromFav }}>
+    <FavContext.Provider value={{ favoritos, addToFav, removeFromFav, clearFav, setFavoritos }}>
       {children}
     </FavContext.Provider>
   );
