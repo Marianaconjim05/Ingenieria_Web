@@ -3,6 +3,7 @@ import React from 'react';
 import { useCartContext } from '../context/CartContext';
 import { FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import './CartView.css';
 
 export default function CartView() {
   const { carrito, removeFromCart, clearCart } = useCartContext();
@@ -19,36 +20,25 @@ export default function CartView() {
   };
 
   return (
-    <div className="container py-5 text-white">
+    <div className="container py-5 text-black">
       <h2 className="border-bottom pb-2">Carrito</h2>
 
       {carrito.length === 0 ? (
         <p>No hay productos en el carrito.</p>
       ) : (
         <>
-          <div className="row row-cols-1 row-cols-md-3 g-4 py-3">
+          <div className="row g-4 py-3">
             {carrito.map((producto, index) => (
-              <div className="col" key={index}>
-                <div className="card bg-dark text-white shadow rounded">
-                  <img
-                    src={producto.image}
-                    className="card-img-top"
-                    alt={producto.name}
-                    style={{
-                      height: '220px',
-                      objectFit: 'cover',
-                      width: '100%',
-                      borderTopLeftRadius: '0.5rem',
-                      borderTopRightRadius: '0.5rem',
-                    }}
-                  />
-                  <div className="card-body d-flex flex-column align-items-center text-center">
-                    <h5 className="card-title text-truncate">{producto.name}</h5>
-                    <p className="card-text fw-bold text-warning">
-                      ${producto.price || producto.precio}
-                    </p>
+              <div className="col-12 col-sm-6 col-md-4" key={index}>
+                <div className="cart-card">
+                  <img src={producto.image} alt={producto.name} className="cart-img" />
+                  <div className="cart-body">
+                    <div>
+                      <h5 className="cart-title">{producto.name}</h5>
+                      <p className="cart-price">${producto.price || producto.precio}</p>
+                    </div>
                     <button
-                      className="btn btn-danger mt-2"
+                      className="btn btn-danger mt-3"
                       onClick={() => removeFromCart(producto.id)}
                     >
                       <FaTrash className="me-1" /> Eliminar
@@ -59,7 +49,7 @@ export default function CartView() {
             ))}
           </div>
 
-          <div className="mt-4 d-flex gap-3 justify-content-end">
+          <div className="cart-actions">
             <button className="btn btn-outline-danger" onClick={handleVaciarCarrito}>
               Vaciar carrito 🗑️
             </button>

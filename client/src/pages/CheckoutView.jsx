@@ -18,7 +18,7 @@ export default function CheckoutView() {
   };
 
   return (
-    <div className="container py-5 text-white">
+    <div className="container py-5 text-black">
       <h2 className="border-bottom pb-2">Finalizar compra</h2>
 
       <div className="mb-3">
