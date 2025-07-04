@@ -20,6 +20,9 @@ export default function NavbarAdmin() {
           <li className="nav-item">
             <NavLink className="nav-link" to="/admin/pedidos">Pedidos</NavLink>
           </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/admin/ventas">Ventas</NavLink>
+          </li>
         </ul>
       </div>
     </nav>

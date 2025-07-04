@@ -19,6 +19,7 @@ import AdminAuxiliares from './pages/admin/AdminAuxiliares';
 import AdminComentarios from './pages/admin/AdminComentarios';
 import NavbarAdmin from './components/NavbarAdmin';
 import AdminPedidos from './pages/admin/AdminPedidos';
+import AdminVentas from './pages/admin/AdminVentas';
 
 
 function App() {
@@ -48,8 +49,12 @@ function App() {
       <Route path="/admin/auxiliares" element={<><NavbarAdmin /><AdminAuxiliares /></>} />
       <Route path="/admin/comentarios" element={<><NavbarAdmin /><AdminComentarios /></>} />
       <Route path="/admin/pedidos" element={<><NavbarAdmin /><AdminPedidos /></>} />
+      <Route path="/admin/ventas" element={<><NavbarAdmin /><AdminVentas /></>} />
 
     </Routes>
   );
 } export default App;
+
+
+
 
