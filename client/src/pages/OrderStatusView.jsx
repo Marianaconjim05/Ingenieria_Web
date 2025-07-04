@@ -14,8 +14,10 @@ export default function OrderStatusView() {
   if (!pedido) {
     return (
       <div className="container py-5 text-black">
-        <h2 className="border-bottom pb-2">Estatus de pedido</h2>
-        <p>No tienes pedidos recientes.</p>
+        <h2 className="border-bottom pb-2">🛒 Estatus del Pedido</h2>
+        <div className="alert alert-info mt-4">
+          No tiene pedidos realizados o pendientes que visualizar.
+        </div>
       </div>
     );
   }
@@ -58,3 +60,4 @@ export default function OrderStatusView() {
     </div>
   );
 }
+
