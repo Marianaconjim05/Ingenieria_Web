@@ -20,6 +20,9 @@ import AdminComentarios from './pages/admin/AdminComentarios';
 import NavbarAdmin from './components/NavbarAdmin';
 import AdminPedidos from './pages/admin/AdminPedidos';
 import AdminVentas from './pages/admin/AdminVentas';
+import AuxiliarPanel from './pages/auxiliar/AuxiliarPanel';
+import Stock from './pages/auxiliar/Stock';
+import AgregarProducto from "./pages/auxiliar/AgregarProducto";
 
 
 function App() {
@@ -51,6 +54,10 @@ function App() {
       <Route path="/admin/pedidos" element={<><NavbarAdmin /><AdminPedidos /></>} />
       <Route path="/admin/ventas" element={<><NavbarAdmin /><AdminVentas /></>} />
 
+      {/* Admin - rutas separadas, sin Layout del cliente */}
+      <Route path="/auxiliar" element={<AuxiliarPanel />} />
+      <Route path="/auxiliar/agregar" element={<AgregarProducto />} />
+      <Route path="/auxiliar/stock" element={<Stock />} />
     </Routes>
   );
 } export default App;
