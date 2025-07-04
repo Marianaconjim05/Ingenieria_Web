@@ -14,7 +14,7 @@ return (
           >
             <FaBootstrap size={30} className="text-secondary" />
           </a>
-          <span className="mb-3 mb-md-0 text-body-secondary">© 2025 UPIITA, IPN</span>
+          <span className="mb-3 mb-md-0 text-body-secondary">© 2025 UPIITA,</span>
         </div>
 
         <ul className="nav col-md-4 justify-content-end list-unstyled d-flex">
