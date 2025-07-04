@@ -9,6 +9,7 @@ import CartView from './pages/CartView';
 import FavView from './pages/FavView';
 import CheckoutView from './pages/CheckoutView';
 import ReviewView from './pages/ReviewView';
+import OrderStatusView from './pages/OrderStatusView';
 import './App.css';
 
 // Import Admin
@@ -35,6 +36,7 @@ function App() {
         <Route path="carrito" element={<CartView />} />
         <Route path="favoritos" element={<FavView />} />
         <Route path="checkout" element={<CheckoutView />} />
+        <Route path="/cliente/estatus" element={<OrderStatusView />} />
         <Route path="review" element={<ReviewView />} />
       </Route>
 

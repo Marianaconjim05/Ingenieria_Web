@@ -7,7 +7,6 @@ export default function CheckoutView() {
   const { carrito, setCarrito } = useCartContext();
   const navigate = useNavigate();
 
-  // Dirección
   const [direccion, setDireccion] = useState({
     calle: '',
     ciudad: '',
@@ -16,7 +15,6 @@ export default function CheckoutView() {
     pais: '',
   });
 
-  // Pago
   const [metodoPago, setMetodoPago] = useState('');
   const [tarjeta, setTarjeta] = useState({
     numero: '',
@@ -36,11 +34,27 @@ export default function CheckoutView() {
     }
 
     const productosComprados = [...carrito];
+    const diasEntrega = Math.floor(Math.random() * 5) + 1;
+    const fechaEntrega = new Date();
+    fechaEntrega.setDate(fechaEntrega.getDate() + diasEntrega);
+
+    const pedido = {
+      productos: productosComprados,
+      direccion,
+      metodoPago,
+      fechaEntrega: fechaEntrega.toDateString(),
+      estatus: "En preparación"
+    };
+
+    // Guardamos el pedido en localStorage
+    localStorage.setItem("pedidoCliente", JSON.stringify(pedido));
+
+    // Limpiar carrito
     setCarrito([]);
 
     alert('¡Compra realizada con éxito!');
 
-    // Redirige a ReviewView con los productos comprados
+    // Redirige a ReviewView
     setTimeout(() => {
       navigate('/review', { state: { productos: productosComprados } });
     }, 100);
