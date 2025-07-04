@@ -1,26 +1,27 @@
-// src/components/NavbarAdmin.jsx
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-function NavbarAdmin() {
+export default function NavbarAdmin() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
-      <Link className="navbar-brand" to="/admin">Panel Admin</Link>
+      <NavLink className="navbar-brand" to="/admin">Panel Admin</NavLink>
+
       <div className="collapse navbar-collapse">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item">
-            <Link className="nav-link" to="/admin/productos">🛍️ Productos</Link>
+            <NavLink className="nav-link" to="/admin/productos">Productos</NavLink>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/admin/auxiliares">👤 Auxiliares</Link>
+            <NavLink className="nav-link" to="/admin/auxiliares">Auxiliares</NavLink>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/admin/comentarios">💬 Comentarios</Link>
+            <NavLink className="nav-link" to="/admin/comentarios">Comentarios</NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/admin/pedidos">Pedidos</NavLink>
           </li>
         </ul>
       </div>
     </nav>
   );
 }
-
-export default NavbarAdmin;
