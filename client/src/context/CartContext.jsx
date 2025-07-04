@@ -1,41 +1,38 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useEffect, useState } from "react";
 
-// Creamos el contexto
-const CartContext = createContext();
-
-// Provider que envuelve la app y proporciona acceso al carrito
+const CarritoContext = createContext();
 export const CarritoProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
 
-  // Cargar carrito desde localStorage al iniciar
+  
   useEffect(() => {
-    const data = localStorage.getItem('carrito');
-    if (data) {
-      setCarrito(JSON.parse(data));
+    const storedCart = localStorage.getItem("carrito");
+    if (storedCart) {
+      setCarrito(JSON.parse(storedCart));
     }
   }, []);
 
-  // Guardar cambios en localStorage
   useEffect(() => {
-    localStorage.setItem('carrito', JSON.stringify(carrito));
+    localStorage.setItem("carrito", JSON.stringify(carrito));
   }, [carrito]);
 
-  // Agregar producto al carrito
-  const addToCart = (producto) => {
-    setCarrito((prev) => [...prev, producto]);
+  const addToCarrito = (producto) => {
+    const exists = carrito.find((item) => item.id === producto.id);
+    if (!exists) {
+      setCarrito([...carrito, producto]);
+    }
   };
 
-  // Eliminar producto del carrito por ID
-  const removeFromCart = (id) => {
-    setCarrito((prev) => prev.filter((item) => item.id !== id));
+  const removeFromCarrito = (id) => {
+    setCarrito(carrito.filter((item) => item.id !== id));
   };
 
   return (
-    <CartContext.Provider value={{ carrito, addToCart, removeFromCart }}>
+    <CarritoContext.Provider value={{ carrito, addToCarrito, removeFromCarrito }}>
       {children}
-    </CartContext.Provider>
+    </CarritoContext.Provider>
   );
 };
 
-export const useCartContext = () => useContext(CartContext);
+export const useCarrito = () => useContext(CarritoContext);
 

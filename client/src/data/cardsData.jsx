@@ -6,7 +6,7 @@ const cardsData = [
     title: 'Camisa negra UPIITA',
     location: 'CDMX',
     duration: 'Envío 3 días',
-    price: '$399',
+    price: '399',
     image: 'images/productos/HSTSILVERHOODIE.webp',
     description: 'Camisa oficial de edición limitada con tela suave y cómoda.',
     sizes: ['S', 'M', 'L', 'XL']
@@ -16,7 +16,7 @@ const cardsData = [
     title: 'Gorra edición limitada',
     location: 'Tijuana',
     duration: 'Envío 5 días',
-    price: '$399',
+    price: '399',
     image:'images/productos/HH-TRACKLIST-T-BACK.webp',
     description: 'Camisa oficial de edición limitada con tela suave y cómoda.',
     sizes: ['S', 'M', 'L', 'XL']
@@ -26,7 +26,7 @@ const cardsData = [
     title: 'Hoodie gris artístico',
     location: 'Puebla',
     duration: 'Envío 4 días',
-    price: '$399',
+    price: '399',
     image: 'images/productos/HH-TRACKLIST-T-FRONT.webp',
     description: 'Camisa oficial de edición limitada con tela suave y cómoda.',
     sizes: ['S', 'M', 'L', 'XL',]
@@ -36,7 +36,7 @@ const cardsData = [
     title: 'Camisa negra UPIITA',
     location: 'CDMX',
     duration: 'Envío 3 días',
-    price: '$399',
+    price: '399',
     image: 'images/productos/HS_TPWK_GREY_HOODIE_UPDATE.webp',
     description: 'Camisa oficial de edición limitada con tela suave y cómoda.',
     sizes: ['S', 'M', 'L', 'XL']
@@ -46,7 +46,7 @@ const cardsData = [
     title: 'Camisa negra UPIITA',
     location: 'CDMX',
     duration: 'Envío 3 días',
-    price: '$399',
+    price: '399',
     image: 'images/productos/housesraglan-lavender.webp',
     description: 'Camisa oficial de edición limitada con tela suave y cómoda.',
     sizes: ['S', 'M', 'L', 'XL']
@@ -56,7 +56,7 @@ const cardsData = [
     title: 'Camisa negra UPIITA',
     location: 'CDMX',
     duration: 'Envío 3 días',
-    price: '$399',
+    price: '399',
     image: 'images/productos/spinningoutbluetruckerhat-HST128184.webp',
     description: 'Camisa oficial de edición limitada con tela suave y cómoda.',
     sizes: ['S', 'M', 'L', 'XL']
