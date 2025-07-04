@@ -1,4 +1,3 @@
-// src/pages/ReviewView.jsx
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './ReviewView.css';
@@ -24,9 +23,19 @@ export default function ReviewView() {
       return;
     }
 
-    console.log("Calificaciones enviadas:", calificaciones);
-    alert("¡Gracias por tu reseña!");
+    // Obtener reseñas anteriores
+    const reseñasGuardadas = JSON.parse(localStorage.getItem('reseñas')) || [];
 
+    // Agregar nuevas reseñas
+    const nuevasReseñas = productos.map((producto, index) => ({
+      nombre: producto.name,
+      calificacion: calificaciones[index].calificacion,
+      comentario: calificaciones[index].comentario
+    }));
+
+    localStorage.setItem('reseñas', JSON.stringify([...reseñasGuardadas, ...nuevasReseñas]));
+
+    alert("¡Gracias por tu reseña!");
     navigate('/cliente');
   };
 
@@ -91,3 +100,4 @@ export default function ReviewView() {
     </div>
   );
 }
+
