@@ -1,6 +1,7 @@
 // src/pages/ReviewView.jsx
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import './ReviewView.css';
 
 export default function ReviewView() {
   const { state } = useLocation();
@@ -26,7 +27,7 @@ export default function ReviewView() {
     console.log("Calificaciones enviadas:", calificaciones);
     alert("¡Gracias por tu reseña!");
 
-    navigate('/cliente'); // Redirige al cliente al home
+    navigate('/cliente');
   };
 
   return (
@@ -36,19 +37,24 @@ export default function ReviewView() {
       {productos.length === 0 ? (
         <p>No hay productos para calificar.</p>
       ) : (
-        <div className="row row-cols-1 row-cols-md-2 g-4">
+        <div className="row row-cols-1 g-4">
           {productos.map((producto, index) => (
             <div className="col" key={index}>
-              <div className="card h-100">
+              <div className="card review-card d-flex flex-row align-items-start p-3">
                 <img
                   src={producto.image}
                   alt={producto.name}
-                  className="card-img-top"
-                  style={{ height: '250px', objectFit: 'cover' }}
+                  style={{
+                    width: '150px',
+                    height: '150px',
+                    objectFit: 'cover',
+                    borderRadius: '8px',
+                    marginRight: '1rem'
+                  }}
                 />
-                <div className="card-body">
+                <div className="flex-grow-1">
                   <h5 className="card-title">{producto.name}</h5>
-                  <label>Calificación (1 a 5)</label>
+                  <label className="form-label">Calificación (1 a 5)</label>
                   <input
                     type="number"
                     min="1"
@@ -59,7 +65,7 @@ export default function ReviewView() {
                       handleChange(index, 'calificacion', e.target.value)
                     }
                   />
-                  <label>Comentario</label>
+                  <label className="form-label">Comentario</label>
                   <textarea
                     className="form-control"
                     rows="2"
