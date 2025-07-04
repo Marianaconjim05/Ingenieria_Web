@@ -1,10 +1,12 @@
 import express from "express";
 import bcrypt from "bcrypt";
-import { sql, pool } from "../config/db.js";
+import jwt from "jsonwebtoken";
+import pool from "../config/db.js";
 
 const router = express.Router();
 const saltRounds = 10;
 
+// ---------- Registro ----------
 router.post("/registro", async (req, res) => {
   const { correo, contraseña, nombre, apellido, rol } = req.body;
 
@@ -13,52 +15,72 @@ router.post("/registro", async (req, res) => {
       return res.status(400).json({ error: "Faltan campos obligatorios" });
     }
 
-    const conn = await pool;
+    const existingUser = await pool.query(
+      "SELECT * FROM Usuarios WHERE Correo = $1",
+      [correo]
+    );
 
-    // Verificar si el correo ya existe
-    const check = await conn
-      .request()
-      .input("correo", sql.VarChar, correo)
-      .query("SELECT * FROM Usuarios WHERE Correo = @correo");
-
-    if (check.recordset.length > 0) {
+    if (existingUser.rows.length > 0) {
       return res.status(409).json({ error: "El correo ya está registrado" });
     }
 
-    // Hashear la contraseña
     const hashedPassword = await bcrypt.hash(contraseña, saltRounds);
 
-    // Insertar en la base
-    await conn
-      .request()
-      .input("correo", sql.VarChar, correo)
-      .input("contraseña", sql.VarChar, hashedPassword)
-      .input("nombre", sql.VarChar, nombre)
-      .input("apellido", sql.VarChar, apellido || "")
-      .input("rol", sql.VarChar, rol)
-      .query(`
-        INSERT INTO Usuarios (Correo, Contraseña, Nombre, Apellido, Rol)
-        VALUES (@correo, @contraseña, @nombre, @apellido, @rol)
-      `);
+    const result = await pool.query(
+      `INSERT INTO Usuarios (Correo, Contraseña, Nombre, Apellido, Rol)
+       VALUES ($1, $2, $3, $4, $5)
+       RETURNING Id_usuario, Correo, Nombre, Apellido, Rol`,
+      [correo, hashedPassword, nombre, apellido, rol]
+    );
 
-    // Obtener el usuario recién insertado (asumiendo que el correo es único)
-    const result = await conn
-      .request()
-      .input("correo", sql.VarChar, correo)
-      .query("SELECT Id_usuario, Correo, Nombre, Apellido, Rol FROM Usuarios WHERE Correo = @correo");
+    const usuario = result.rows[0];
 
-    const nuevoUsuario = result.recordset[0];
+    const token = jwt.sign(
+      { id: usuario.id_usuario, correo: usuario.correo },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
 
-    res.status(201).json({ mensaje: "Usuario registrado", usuario: nuevoUsuario });
-
+    res.status(201).json({ mensaje: "Registrado", token });
   } catch (err) {
-    console.error("Error en /registroUsuarios:", err);
-
-    if (err.number === 2627) {
-      // Código de error de SQL Server por violar restricción UNIQUE
+    console.error("Error en /registro:", err);
+    if (err.code === "23505") {
       return res.status(409).json({ error: "Correo ya registrado" });
     }
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
 
+// ---------- Login ----------
+router.post("/login", async (req, res) => {
+  const { correo, contraseña } = req.body;
+
+  try {
+    const result = await pool.query(
+      "SELECT * FROM Usuarios WHERE Correo = $1",
+      [correo]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(401).json({ error: "Correo no registrado" });
+    }
+
+    const usuario = result.rows[0];
+
+    const valid = await bcrypt.compare(contraseña, usuario.contraseña);
+    if (!valid) {
+      return res.status(401).json({ error: "Contraseña incorrecta" });
+    }
+
+    const token = jwt.sign(
+      { id: usuario.id_usuario, correo: usuario.correo },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.status(200).json({ mensaje: "Login exitoso", token, usuario });
+  } catch (err) {
+    console.error("Error en /login:", err);
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });

@@ -1,12 +1,29 @@
 import express from "express";
-import usuariosRoutes from "./routes/registroUsuarios.js";
 import cors from "cors";
+import passport from "passport";
+import usuariosRoutes from "./routes/registroUsuarios.js"; // <-- Aquí importas la ruta
+import authRoutes from "./routes/authRoutes.js"; // (si usas login por Google o JWT)
+import session from "express-session";
+
+
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 app.use("/usuarios", usuariosRoutes);
+app.use("/auth", authRoutes); 
+
+// Configuración de sesión (usada por passport, incluso si luego no la usas)
+app.use(session({
+  secret: process.env.JWT_SECRET,                                                                           
+  resave: false,
+  saveUninitialized: true
+}));
+
+// Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 const PORT = 3000;
 app.listen(PORT, () => {
