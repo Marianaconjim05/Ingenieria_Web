@@ -1,14 +1,15 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState, useEffect } from 'react';
 
-const CarritoContext = createContext();
+// ✅ Define el contexto ANTES de usarlo
+const CartContext = createContext();
+
 export const CarritoProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
 
-  
   useEffect(() => {
-    const storedCart = localStorage.getItem("carrito");
-    if (storedCart) {
-      setCarrito(JSON.parse(storedCart));
+    const data = localStorage.getItem("carrito");
+    if (data) {
+      setCarrito(JSON.parse(data));
     }
   }, []);
 
@@ -16,23 +17,20 @@ export const CarritoProvider = ({ children }) => {
     localStorage.setItem("carrito", JSON.stringify(carrito));
   }, [carrito]);
 
-  const addToCarrito = (producto) => {
-    const exists = carrito.find((item) => item.id === producto.id);
-    if (!exists) {
-      setCarrito([...carrito, producto]);
-    }
+  const addToCart = (producto) => {
+    setCarrito((prev) => [...prev, producto]);
   };
 
-  const removeFromCarrito = (id) => {
-    setCarrito(carrito.filter((item) => item.id !== id));
+  const removeFromCart = (id) => {
+    setCarrito((prev) => prev.filter((item) => item.id !== id));
   };
 
   return (
-    <CarritoContext.Provider value={{ carrito, addToCarrito, removeFromCarrito }}>
+    <CartContext.Provider value={{ carrito, addToCart, removeFromCart }}>
       {children}
-    </CarritoContext.Provider>
+    </CartContext.Provider>
   );
 };
 
-export const useCarrito = () => useContext(CarritoContext);
-
+// ✅ Hook personalizado exportado correctamente
+export const useCartContext = () => useContext(CartContext);
